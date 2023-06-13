@@ -1,0 +1,52 @@
+TASK 7:
+
+Create Database and Create Following Table (Consult with seniors before creating tables) 
+
+1. Login - Login ID, User Name, Password, IS Enabled, Created Date , Created by, Modified Date, Modified by 
+
+2. Login History, Hist ID(AutoID), LoginID(Foreign Key), Action (To Track, Login, Logout), Modified Date 
+
+3. User Type - TypeID(AutoID) - Login ID, User Type( Admin,User, Student),  Created by, Modified Date, Modified by  
+
+SOLUTION:
+
+-- Create the database
+CREATE DATABASE Database_AcademicTraining;
+
+-- Use the newly created database
+USE Database_AcademicTraining;
+
+-- Create the Login table
+CREATE TABLE Login (
+  LoginID INT PRIMARY KEY,
+  UserName VARCHAR(50),
+  Password VARCHAR(50),
+  IsEnabled BIT,
+  CreatedDate DATETIME,
+  CreatedBy VARCHAR(50),
+  ModifiedDate DATETIME,
+  ModifiedBy VARCHAR(50)
+);
+
+
+-- Create the LoginHistory table
+CREATE TABLE LoginHistory
+(
+	HistID int IDENTITY(1,1) PRIMARY KEY,
+	LoginID INT,
+	Action VARCHAR(10),
+	ModifiedDate DATETIME,
+	FOREIGN KEY (LoginID) REFERENCES Login(LoginID)
+);
+
+
+-- Create the UserType table
+CREATE TABLE UserType (
+	TypeID int IDENTITY(1,1) PRIMARY KEY, 
+	LoginID INT,
+	UserType VARCHAR(20),
+	CreatedBy VARCHAR(50),
+	ModifiedDate DATETIME,
+	ModifiedBy VARCHAR(50),
+	FOREIGN KEY (LoginID) REFERENCES Login(LoginID)
+);

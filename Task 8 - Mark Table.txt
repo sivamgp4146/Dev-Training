@@ -1,0 +1,60 @@
+Task 8:
+======
+Create Tables For  
+1. Department Master ( eg, CSE, ECE,MECH, EEE etc..) 
+2. Subject Master (Foreign Key to the department, It should have Max Marks and Min Marks column for each subject [this column will be used to identify if a student is pass/fails in each subject] ) 
+3. Student Master (foreign key to the department, for student name and address) 
+4. Semester Master(foreign key to department) 
+5. Marks Entry (foreign key to All the above tables) 
+
+Solution:
+=======
+
+// Department Master table
+CREATE TABLE DepartmentMaster (
+    department_id INT PRIMARY KEY,
+    department_name VARCHAR(50)
+);
+
+//Subject Master table
+CREATE TABLE SubjectMaster (
+    subject_id INT PRIMARY KEY,
+    department_id INT,
+    subject_name VARCHAR(50),
+    max_marks INT,
+    min_marks INT,
+    FOREIGN KEY (department_id) REFERENCES DepartmentMaster(department_id)
+);
+
+//Student Master
+CREATE TABLE StudentMaster (
+    student_id INT PRIMARY KEY,
+    department_id INT,
+    student_name VARCHAR(50),
+    address VARCHAR(100),
+    FOREIGN KEY (department_id) REFERENCES DepartmentMaster(department_id)
+);
+
+
+//Semester Master table
+CREATE TABLE SemesterMaster (
+    semester_id INT PRIMARY KEY,
+    department_id INT,
+    semester_name VARCHAR(50),
+    FOREIGN KEY (department_id) REFERENCES DepartmentMaster(department_id)
+);
+
+
+//Marks Entry table
+CREATE TABLE MarksEntry (
+    marks_id INT PRIMARY KEY,
+    student_id INT,
+    department_id INT,
+    semester_id INT,
+    subject_id INT,
+    marks_obtained INT,
+    FOREIGN KEY (student_id) REFERENCES StudentMaster(student_id),
+    FOREIGN KEY (department_id) REFERENCES DepartmentMaster(department_id),
+    FOREIGN KEY (semester_id) REFERENCES SemesterMaster(semester_id),
+    FOREIGN KEY (subject_id) REFERENCES SubjectMaster(subject_id)
+);
